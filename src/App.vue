@@ -4,18 +4,38 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
+const isDownloadDropdownOpen = ref(false)
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
-const downloadApp = () => {
-  window.open('https://tools.woftsun.cn/livetools3.2.8.zip', '_blank')
+const downloadStableApp = () => {
+  window.open('https://tools.woftsun.cn/livetools3.3.2.zip', '_blank')
+  isDownloadDropdownOpen.value = false
 }
 
-const downloadAndCloseMenu = () => {
-  downloadApp()
+const downloadBetaApp = () => {
+  window.open('https://tools.woftsun.cn/livetools3.3.1.zip', '_blank')
+  isDownloadDropdownOpen.value = false
+}
+
+const downloadStableAndCloseMenu = () => {
+  downloadStableApp()
   closeMobileMenu()
+}
+
+const downloadBetaAndCloseMenu = () => {
+  downloadBetaApp()
+  closeMobileMenu()
+}
+
+const toggleDownloadDropdown = () => {
+  isDownloadDropdownOpen.value = !isDownloadDropdownOpen.value
+}
+
+const closeDownloadDropdown = () => {
+  isDownloadDropdownOpen.value = false
 }
 
 const toggleMobileMenu = () => {
@@ -62,7 +82,35 @@ onUnmounted(() => {
       </nav>
 
       <div class="nav-actions">
-        <button class="btn-download desktop-only" @click="downloadApp">下载</button>
+        <div
+          class="download-dropdown desktop-only"
+          @mouseenter="toggleDownloadDropdown"
+          @mouseleave="closeDownloadDropdown"
+        >
+          <button class="btn-download">
+            下载
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="6,9 12,15 18,9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-menu" :class="{ show: isDownloadDropdownOpen }">
+            <button class="dropdown-item" @click="downloadStableApp">
+              <span class="version-badge stable">正式版</span>
+              <span class="version-desc">稳定版本，推荐使用</span>
+            </button>
+            <!-- <button class="dropdown-item" @click="downloadBetaApp">
+              <span class="version-badge beta">Beta版</span>
+              <span class="version-desc">测试版本，体验新功能</span>
+            </button> -->
+          </div>
+        </div>
         <!-- 移动端汉堡菜单按钮 -->
         <button class="mobile-menu-btn" @click="toggleMobileMenu">
           <svg
@@ -157,7 +205,7 @@ onUnmounted(() => {
           </svg>
           联系作者
         </RouterLink>
-        <button class="mobile-download-btn" @click="downloadAndCloseMenu">
+        <button class="mobile-download-btn" @click="downloadStableAndCloseMenu">
           <svg
             width="20"
             height="20"
@@ -170,7 +218,22 @@ onUnmounted(() => {
             <polyline points="7,10 12,15 17,10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          下载应用
+          下载正式版
+        </button>
+        <button class="mobile-download-btn mobile-beta-btn" @click="downloadBetaAndCloseMenu">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7,10 12,15 17,10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          下载Beta版
         </button>
       </div>
     </div>
@@ -276,7 +339,7 @@ header.scrolled {
 }
 
 .btn-download {
-  background: #1e40af;
+  background: #3b82f6;
   color: white;
   border: none;
   padding: 0.5rem 1.5rem;
@@ -284,11 +347,84 @@ header.scrolled {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-download:hover {
-  background: #1d4ed8;
+  background: #2563eb;
   transform: translateY(-1px);
+}
+
+/* 下载下拉菜单 */
+.download-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  min-width: 280px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background: #f8fafc;
+}
+
+.version-badge {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.version-badge.stable {
+  color: #1e40af;
+}
+
+.version-badge.beta {
+  color: #f59e0b;
+}
+
+.version-desc {
+  font-size: 0.8rem;
+  color: #6b7280;
+  text-align: left;
 }
 
 /* Logo 响应式显示 */
@@ -403,6 +539,15 @@ header.scrolled {
 .mobile-download-btn:hover {
   background: #1d4ed8;
   transform: translateY(-1px);
+}
+
+.mobile-beta-btn {
+  background: #f59e0b;
+  margin-top: 1rem;
+}
+
+.mobile-beta-btn:hover {
+  background: #d97706;
 }
 
 .desktop-only {
