@@ -14,17 +14,9 @@ const contactMethods = [
     id: 1,
     title: '微信联系',
     description: '扫码添加作者微信，获取一对一技术支持',
-    qrcode: 'https://tools.woftsun.cn/wechat.png',
+    qrcode: 'https://agent.fish.woftsun.cn/fish.png',
     type: 'wechat',
     note: '工作时间：9:00-22:00',
-  },
-  {
-    id: 2,
-    title: '公众号关注',
-    description: '关注公众号，获取最新功能更新和使用教程',
-    qrcode: 'https://tools.woftsun.cn/mp-qr.png',
-    type: 'official',
-    note: '定期发布教程和更新',
   },
 ]
 
@@ -167,66 +159,6 @@ const advantages = [
               <h3>{{ advantage.title }}</h3>
               <p>{{ advantage.description }}</p>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Plugins Section -->
-    <section class="plugins-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">我的插件作品</h2>
-          <p class="section-subtitle">专注于提升直播效率的工具集合</p>
-        </div>
-
-        <div class="plugins-grid">
-          <div v-for="plugin in plugins" :key="plugin.id" class="plugin-card">
-            <div class="plugin-header">
-              <div class="plugin-title-row">
-                <h3>{{ plugin.name }}</h3>
-                <span
-                  class="plugin-status"
-                  :class="plugin.status === '已发布' ? 'published' : 'development'"
-                >
-                  {{ plugin.status }}
-                </span>
-              </div>
-              <p class="plugin-description">{{ plugin.description }}</p>
-            </div>
-
-            <div class="plugin-stats">
-              <div class="stat-item">
-                <span class="stat-label">版本</span>
-                <span class="stat-value">{{ plugin.version }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">用户</span>
-                <span class="stat-value">{{ plugin.users }}</span>
-              </div>
-            </div>
-
-            <div class="plugin-features">
-              <h4>核心功能</h4>
-              <ul class="features-list">
-                <li v-for="feature in plugin.features" :key="feature">
-                  {{ feature }}
-                </li>
-              </ul>
-            </div>
-
-            <div class="plugin-actions">
-              <router-link :to="plugin.link" class="btn-primary">了解详情</router-link>
-            </div>
-          </div>
-        </div>
-
-        <!-- 后续插件预告 -->
-        <div class="coming-soon">
-          <div class="coming-soon-content">
-            <h3>更多插件正在开发中...</h3>
-            <p>我们正在开发更多实用的直播工具，敬请期待！</p>
-            <p class="coming-soon-note">有好的想法或需求？欢迎通过微信联系我</p>
           </div>
         </div>
       </div>

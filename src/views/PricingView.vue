@@ -6,7 +6,7 @@ const pricingPlans = ref([
   {
     id: 'monthly',
     name: '月卡',
-    price: 25,
+    price: 89,
     period: '月',
     description: '适合短期体验用户',
     features: ['支持所有功能', '免费更新', '同时可以一个直播间使用'],
@@ -16,7 +16,7 @@ const pricingPlans = ref([
   {
     id: 'yearly',
     name: '年卡',
-    price: 249,
+    price: 799,
     period: '年',
     description: '最受欢迎的选择',
     features: ['支持所有功能', '免费更新', '同时可以一个直播间使用'],
@@ -25,25 +25,15 @@ const pricingPlans = ref([
     badge: '最畅销卡',
   },
   {
-    id: 'supreme',
-    name: '至尊卡',
-    price: 1699,
-    period: '年',
-    description: '支持10个直播间同时使用',
-    features: ['支持所有功能', '免费更新', '同时可以10个直播间使用'],
-    buttonText: '联系作者购买',
-    popular: false,
-  },
-  {
     id: 'lifetime',
     name: '永久卡',
-    price: 699,
+    price: 1299,
     period: '永久',
-    description: '终身使用，成为代理',
-    features: ['限量500份', '免费更新', '定制官网', '拿货7折优惠'],
+    description: '终身使用',
+    features: ['限量500份', '免费更新', '永久使用'],
     buttonText: '联系作者购买',
     popular: false,
-    badge: '代理',
+    badge: '',
   },
 ])
 </script>
@@ -222,7 +212,7 @@ main {
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
