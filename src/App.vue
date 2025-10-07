@@ -11,7 +11,7 @@ const handleScroll = () => {
 }
 
 const downloadStableApp = () => {
-  window.open('https://tools.woftsun.cn/livetools3.3.3.zip', '_blank')
+  window.open('https://tools.woftsun.cn/livetools3.4.0.zip', '_blank')
   isDownloadDropdownOpen.value = false
 }
 
@@ -105,10 +105,10 @@ onUnmounted(() => {
               <span class="version-badge stable">正式版</span>
               <span class="version-desc">稳定版本，推荐使用</span>
             </button>
-            <button class="dropdown-item" @click="downloadBetaApp">
+            <!-- <button class="dropdown-item" @click="downloadBetaApp">
               <span class="version-badge beta">Beta版</span>
               <span class="version-desc">测试版本，体验新功能</span>
-            </button>
+            </button> -->
           </div>
         </div>
         <!-- 移动端汉堡菜单按钮 -->
