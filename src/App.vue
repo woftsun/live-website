@@ -1,6 +1,13 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import { ref, onMounted, onUnmounted } from 'vue'
+<script setup>
+import { RouterLink, RouterView, useRoute } from 'vue-router'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+
+const route = useRoute()
+
+// 获取当前路径参数，如果没有则默认为 '1'
+const currentId = computed(() => {
+  return route.params.id || '1'
+})
 
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -11,7 +18,7 @@ const handleScroll = () => {
 }
 
 const downloadStableApp = () => {
-  window.open('https://agent.fish.woftsun.cn/livetools3.4.0.zip', '_blank')
+  window.open('https://agent.woftsun.cn/plugins/livetools3.4.1.zip', '_blank')
   isDownloadDropdownOpen.value = false
 }
 
@@ -59,7 +66,7 @@ onUnmounted(() => {
   <header :class="{ scrolled: isScrolled }">
     <div class="nav-container">
       <div class="logo">
-        <RouterLink to="/" style="text-decoration: none">
+        <RouterLink :to="`/${currentId}`" style="text-decoration: none">
           <!-- 桌面端显示文字标题 -->
           <h2
             class="logo-text"
@@ -74,11 +81,11 @@ onUnmounted(() => {
 
       <!-- 桌面端导航 -->
       <nav class="main-nav">
-        <RouterLink to="/" class="nav-link">首页</RouterLink>
-        <RouterLink to="/features" class="nav-link">功能</RouterLink>
-        <RouterLink to="/pricing" class="nav-link">定价</RouterLink>
-        <RouterLink to="/tutorial" class="nav-link">教程</RouterLink>
-        <RouterLink to="/contact" class="nav-link">联系作者</RouterLink>
+        <RouterLink :to="`/${currentId}`" class="nav-link">首页</RouterLink>
+        <RouterLink :to="`/features/${currentId}`" class="nav-link">功能</RouterLink>
+        <RouterLink :to="`/pricing/${currentId}`" class="nav-link">定价</RouterLink>
+        <RouterLink :to="`/tutorial/${currentId}`" class="nav-link">教程</RouterLink>
+        <RouterLink :to="`/contact/${currentId}`" class="nav-link">联系作者</RouterLink>
       </nav>
 
       <div class="nav-actions">
@@ -132,7 +139,7 @@ onUnmounted(() => {
     <!-- 移动端导航菜单 -->
     <div class="mobile-nav" :class="{ open: isMobileMenuOpen }" @click="closeMobileMenu">
       <div class="mobile-nav-content" @click.stop>
-        <RouterLink to="/" class="mobile-nav-link" @click="closeMobileMenu">
+        <RouterLink :to="`/${currentId}`" class="mobile-nav-link" @click="closeMobileMenu">
           <svg
             width="20"
             height="20"
@@ -146,7 +153,7 @@ onUnmounted(() => {
           </svg>
           首页
         </RouterLink>
-        <RouterLink to="/features" class="mobile-nav-link" @click="closeMobileMenu">
+        <RouterLink :to="`/features/${currentId}`" class="mobile-nav-link" @click="closeMobileMenu">
           <svg
             width="20"
             height="20"
@@ -161,7 +168,7 @@ onUnmounted(() => {
           </svg>
           功能
         </RouterLink>
-        <RouterLink to="/pricing" class="mobile-nav-link" @click="closeMobileMenu">
+        <RouterLink :to="`/pricing/${currentId}`" class="mobile-nav-link" @click="closeMobileMenu">
           <svg
             width="20"
             height="20"
@@ -175,7 +182,7 @@ onUnmounted(() => {
           </svg>
           定价
         </RouterLink>
-        <RouterLink to="/tutorial" class="mobile-nav-link" @click="closeMobileMenu">
+        <RouterLink :to="`/tutorial/${currentId}`" class="mobile-nav-link" @click="closeMobileMenu">
           <svg
             width="20"
             height="20"
@@ -189,7 +196,7 @@ onUnmounted(() => {
           </svg>
           教程
         </RouterLink>
-        <RouterLink to="/contact" class="mobile-nav-link" @click="closeMobileMenu">
+        <RouterLink :to="`/contact/${currentId}`" class="mobile-nav-link" @click="closeMobileMenu">
           <svg
             width="20"
             height="20"

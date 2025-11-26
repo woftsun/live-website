@@ -1,48 +1,24 @@
-<script setup lang="ts">
-// 作者信息
-const authorInfo = {
-  name: '作者',
-  title: '全栈开发工程师',
-  description:
-    '擅长网站、小程序、浏览器插件以及直播工具开发，如抖音数据爬取、自动化工具开发、直播工具优化等',
-  experience: '5年从业经验，3年+抖音相关开发经验',
-}
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import dataConfig from '../config/data.json'
 
-// 联系方式数据
-const contactMethods = [
-  {
-    id: 1,
-    title: '微信联系',
-    description: '扫码添加作者微信，获取一对一技术支持',
-    qrcode: 'https://agent.fish.woftsun.cn/fish.png',
-    type: 'wechat',
-    note: '工作时间：9:00-22:00',
-  },
-]
+const route = useRoute()
 
-// 插件列表（为后续扩展预留）
-const plugins = [
-  {
-    id: 1,
-    name: '本地生活直播助手',
-    description: '专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能',
-    status: '已发布',
-    version: 'v3.2.5',
-    users: '500+',
-    features: ['自动弹窗', '自动发福袋', '自动发券', '自动发评', '自动回复', '自动加库存'],
-    link: '/pricing',
-  },
-  {
-    id: 2,
-    name: '摸鱼倒计时',
-    description: '摸鱼小时钟',
-    status: '已发布',
-    version: 'v2.0.0',
-    users: '10000+',
-    features: ['下班倒计时', '周末倒计时', '节假日倒计时', '发工资倒计时'],
-    link: '/pricing',
-  },
-]
+// 响应式数据
+const authorInfo = ref({})
+const contactMethods = ref([])
+const plugins = ref([])
+
+// 根据路径参数加载数据
+onMounted(() => {
+  const id = route.params.id
+  const contactData = dataConfig.contact[id] || dataConfig.contact['1']
+  
+  authorInfo.value = contactData.authorInfo
+  contactMethods.value = contactData.contactMethods
+  plugins.value = contactData.plugins
+})
 
 // 服务优势
 const advantages = [
@@ -171,7 +147,7 @@ const advantages = [
           <h2>准备开始使用我的插件？</h2>
           <p>扫码添加微信，获取专业技术支持和最新产品资讯</p>
           <div class="cta-buttons">
-            <router-link to="/pricing" class="btn-primary">查看价格</router-link>
+            <router-link :to="`/pricing/${route.params.id || '1'}`" class="btn-primary">查看价格</router-link>
             <a href="#contact-section" class="btn-secondary">立即联系</a>
           </div>
         </div>

@@ -1,5 +1,13 @@
-<script setup lang="ts">
-import { ref } from 'vue'
+<script setup>
+import { ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+// 获取当前路径参数，如果没有则默认为 '1'
+const currentId = computed(() => {
+  return route.params.id || '1'
+})
 
 // 团队成员数据
 const teamMembers = ref([
@@ -178,8 +186,8 @@ const values = ref([
         <h2>加入我们的旅程</h2>
         <p>如果您对我们的产品感兴趣，或者希望与我们合作，欢迎联系我们</p>
         <div class="cta-buttons">
-          <router-link to="/contact" class="btn-primary">联系我们</router-link>
-          <router-link to="/pricing" class="btn-secondary">查看定价</router-link>
+          <router-link :to="`/contact/${currentId}`" class="btn-primary">联系我们</router-link>
+          <router-link :to="`/pricing/${currentId}`" class="btn-secondary">查看定价</router-link>
         </div>
       </div>
     </section>

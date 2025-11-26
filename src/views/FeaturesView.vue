@@ -1,4 +1,14 @@
-<script setup lang="ts">
+<script setup>
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+
+const route = useRoute()
+
+// 获取当前路径参数，如果没有则默认为 '1'
+const currentId = computed(() => {
+  return route.params.id || '1'
+})
+
 // 核心功能数据 - 与首页保持一致
 const features = [
   {
@@ -120,8 +130,8 @@ const features = [
           <h2>准备开始您的智能直播之旅？</h2>
           <p>加入数千家成功企业，体验自动化中控直播解决方案</p>
           <div class="cta-buttons">
-            <router-link to="/pricing" class="btn-primary">查看价格</router-link>
-            <router-link to="/contact" class="btn-secondary">联系我们</router-link>
+            <router-link :to="`/pricing/${currentId}`" class="btn-primary">查看价格</router-link>
+            <router-link :to="`/contact/${currentId}`" class="btn-secondary">联系我们</router-link>
           </div>
         </div>
       </div>
