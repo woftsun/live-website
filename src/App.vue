@@ -1,12 +1,17 @@
 <script setup>
 import { RouterLink, RouterView, useRoute } from 'vue-router'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import dataConfig from './config/data.json'
 
 const route = useRoute()
 
+const authorInfo = ref({})
+const contactMethods = ref([])
+const plugins = ref([])
+
 // 获取当前路径参数，如果没有则默认为 '1'
 const currentId = computed(() => {
-  return route.params.id || '1'
+  return route.params.id
 })
 
 const isScrolled = ref(false)
@@ -18,7 +23,7 @@ const handleScroll = () => {
 }
 
 const downloadStableApp = () => {
-  window.open('https://agent.woftsun.cn/plugins/livetools3.4.1.zip', '_blank')
+  window.open(authorInfo.value.downLoadLink, '_blank')
   isDownloadDropdownOpen.value = false
 }
 
@@ -56,6 +61,20 @@ const closeMobileMenu = () => {
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 })
+
+// 根据路由参数加载数据，并在参数变化时更新
+watch(
+  () => route.params.id,
+  (newId) => {
+    const id = newId
+    const contactData = dataConfig.contact[id]
+    if (contactData) {
+      authorInfo.value = contactData
+      contactMethods.value = contactData.contactMethods
+      plugins.value = contactData.plugins
+    }
+  },
+)
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
@@ -196,7 +215,7 @@ onUnmounted(() => {
           </svg>
           教程
         </RouterLink>
-        <RouterLink :to="`/contact/${currentId}`" class="mobile-nav-link" @click="closeMobileMenu">
+        <RouterLink to="/contact" class="mobile-nav-link" @click="closeMobileMenu">
           <svg
             width="20"
             height="20"

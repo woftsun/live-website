@@ -13,8 +13,7 @@ const plugins = ref([])
 // 根据路径参数加载数据
 onMounted(() => {
   const id = route.params.id
-  const contactData = dataConfig.contact[id] || dataConfig.contact['1']
-  
+  const contactData = dataConfig.contact[id]
   authorInfo.value = contactData.authorInfo
   contactMethods.value = contactData.contactMethods
   plugins.value = contactData.plugins
@@ -46,7 +45,7 @@ const advantages = [
 <template>
   <main>
     <!-- Page Header -->
-    <section class="page-header">
+    <section class="page-header" v-if="authorInfo">
       <div class="container">
         <h1 class="section-title">联系作者</h1>
         <p class="section-subtitle">专业的技术支持，贴心的服务体验</p>
@@ -54,7 +53,7 @@ const advantages = [
     </section>
 
     <!-- Author Info Section -->
-    <section class="author-section">
+    <section class="author-section" v-if="authorInfo">
       <div class="container">
         <div class="author-card">
           <div class="author-avatar">
@@ -147,7 +146,9 @@ const advantages = [
           <h2>准备开始使用我的插件？</h2>
           <p>扫码添加微信，获取专业技术支持和最新产品资讯</p>
           <div class="cta-buttons">
-            <router-link :to="`/pricing/${route.params.id || '1'}`" class="btn-primary">查看价格</router-link>
+            <router-link :to="`/pricing/${route.params.id || '1'}`" class="btn-primary"
+              >查看价格</router-link
+            >
             <a href="#contact-section" class="btn-secondary">立即联系</a>
           </div>
         </div>

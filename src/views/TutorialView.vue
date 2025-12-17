@@ -104,11 +104,7 @@ const openVideo = (url: string) => {
         <div class="video-grid">
           <div
             class="video-card"
-            @click="
-              openVideo(
-                'https://www.bilibili.com/video/BV1Rj8gzjEX1/?vd_source=8ce62a0a3997267ff0af117d3260485d',
-              )
-            "
+            @click="openVideo('https://ai.feishu.cn/wiki/Bbrww7Qx6ins5Pk8nMyc25s1nAf')"
           >
             <div
               class="video-thumbnail"
@@ -129,7 +125,7 @@ const openVideo = (url: string) => {
 
           <div
             class="video-card"
-            @click="openVideo('https://www.bilibili.com/video/BV1mY8gzvELE/')"
+            @click="openVideo('https://ai.feishu.cn/wiki/Bbrww7Qx6ins5Pk8nMyc25s1nAf')"
           >
             <div
               class="video-thumbnail"
@@ -150,11 +146,7 @@ const openVideo = (url: string) => {
 
           <div
             class="video-card"
-            @click="
-              openVideo(
-                'https://www.bilibili.com/video/BV1mY8gziEuZ/?vd_source=8ce62a0a3997267ff0af117d3260485d',
-              )
-            "
+            @click="openVideo('https://ai.feishu.cn/wiki/Bbrww7Qx6ins5Pk8nMyc25s1nAf')"
           >
             <div
               class="video-thumbnail"

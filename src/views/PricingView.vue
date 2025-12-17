@@ -1,9 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import dataConfig from '../config/data.json'
 
 const route = useRoute()
+const router = useRouter()
+const currentId = computed(() => route.params.id)
 
 // 定价方案数据
 const pricingPlans = ref([])
@@ -14,6 +16,10 @@ onMounted(() => {
   const plans = dataConfig.pricing[id] || dataConfig.pricing['1']
   pricingPlans.value = plans
 })
+
+const goToContact = () => {
+  router.push(`/contact/${currentId.value}`)
+}
 </script>
 
 <template>
@@ -58,7 +64,7 @@ onMounted(() => {
                 {{ feature }}
               </li>
             </ul>
-            <button class="plan-button">
+            <button class="plan-button" @click="goToContact">
               {{ plan.buttonText }}
             </button>
           </div>
@@ -121,8 +127,7 @@ onMounted(() => {
           <h2>准备开始您的智能直播之旅？</h2>
           <p>选择适合的套餐，让直播变得更简单高效</p>
           <div class="cta-buttons">
-            <button class="btn-primary">联系客服</button>
-            <router-link to="/contact" class="btn-secondary">了解更多</router-link>
+            <button class="btn-primary" @click="goToContact">联系客服</button>
           </div>
         </div>
       </div>
