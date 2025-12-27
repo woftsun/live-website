@@ -25,16 +25,6 @@ const pricingPlans = ref([
     badge: '最畅销卡',
   },
   {
-    id: 'supreme',
-    name: '至尊卡',
-    price: 1699,
-    period: '年',
-    description: '支持10个直播间同时使用',
-    features: ['支持所有功能', '可远程指导', '同时可以10个直播间使用'],
-    buttonText: '联系作者购买',
-    popular: false,
-  },
-  {
     id: 'lifetime',
     name: '永久卡',
     price: 699,
@@ -222,7 +212,7 @@ main {
 
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
