@@ -72,7 +72,7 @@
   "contact": {
     "1": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/livetools3.4.1.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/livetools3.5.1.zip",
       "contactMethods": [
         {
           "id": 1,
@@ -98,7 +98,7 @@
     },
     "1127": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/young/livetools3.4.1.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/young/livetools3.5.1.zip",
       "contactMethods": [
         {
           "id": 1,
