@@ -11,7 +11,7 @@ const handleScroll = () => {
 }
 
 const downloadStableApp = () => {
-  window.open('https://tools.woftsun.cn/livetools3.5.2.zip', '_blank')
+  window.open('https://tools.woftsun.cn/livetools3.5.3.zip', '_blank')
   isDownloadDropdownOpen.value = false
 }
 
