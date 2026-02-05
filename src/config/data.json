@@ -67,12 +67,46 @@
         "popular": false,
         "badge": ""
       }
+    ],
+    "0129": [
+      {
+        "id": "monthly",
+        "name": "月卡",
+        "price": 29,
+        "period": "月",
+        "description": "适合短期体验用户",
+        "features": ["支持所有功能", "免费更新", "同时可以一个直播间使用"],
+        "buttonText": "联系作者购买",
+        "popular": false
+      },
+      {
+        "id": "yearly",
+        "name": "年卡",
+        "price": 269,
+        "period": "年",
+        "description": "最受欢迎的选择",
+        "features": ["支持所有功能", "免费更新", "同时可以一个直播间使用"],
+        "buttonText": "联系作者购买",
+        "popular": true,
+        "badge": "最畅销卡"
+      },
+      {
+        "id": "lifetime",
+        "name": "永久卡",
+        "price": 699,
+        "period": "永久",
+        "description": "终身使用",
+        "features": ["限量500份", "免费更新", "永久使用"],
+        "buttonText": "联系作者购买",
+        "popular": false,
+        "badge": ""
+      }
     ]
   },
   "contact": {
     "1": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/livetools3.5.1.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/livetools3.5.3.zip",
       "contactMethods": [
         {
           "id": 1,
@@ -105,6 +139,32 @@
           "title": "微信联系",
           "description": "扫码添加作者微信，获取一对一技术支持",
           "qrcode": "https://agent.woftsun.cn/image/young.png",
+          "type": "wechat",
+          "note": "工作时间：8:00-24:00"
+        }
+      ],
+      "plugins": [
+        {
+          "id": 1,
+          "name": "本地生活直播助手",
+          "description": "专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能",
+          "status": "已发布",
+          "version": "v3.4.1",
+          "users": "1000+",
+          "features": ["自动弹窗", "自动发福袋", "自动发券", "自动发评", "自动回复", "自动加库存"],
+          "link": "/pricing"
+        }
+      ]
+    },
+    "0129": {
+      "authorInfo": null,
+      "downLoadLink": "https://agent.woftsun.cn/plugins/kaile/livetools3.5.3.zip",
+      "contactMethods": [
+        {
+          "id": 1,
+          "title": "微信联系",
+          "description": "扫码添加作者微信，获取一对一技术支持",
+          "qrcode": "https://agent.woftsun.cn/image/kaile.png",
           "type": "wechat",
           "note": "工作时间：8:00-24:00"
         }
