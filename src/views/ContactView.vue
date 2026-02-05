@@ -32,12 +32,22 @@ const contactMethods = [
 const plugins = [
   {
     id: 1,
-    name: '本地生活直播助手',
+    name: '小鸟智播-本地生活',
     description: '专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能',
     status: '已发布',
     version: 'v3.2.5',
-    users: '500+',
+    users: '1500+',
     features: ['自动弹窗', '自动发福袋', '自动发券', '自动发评', '自动回复', '自动加库存'],
+    link: '/pricing',
+  },
+  {
+    id: 1,
+    name: '小鸟智播-视频号',
+    description: '专为微信视频号商家打造的智能直播工具，支持自动弹窗、自动发评、自动回复等功能',
+    status: '已发布',
+    version: 'v1.0.3',
+    users: '500+',
+    features: ['自动弹窗', '自动发评', '自动回复'],
     link: '/pricing',
   },
   {

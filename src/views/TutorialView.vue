@@ -5,7 +5,7 @@ import { ref } from 'vue'
 const faqs = ref([
   {
     id: 1,
-    question: '❓ 本地生活直播助手支持哪些设备？',
+    question: '❓ 小鸟智播支持哪些设备？',
     answer:
       '目前只支持电脑端，后续也会支持更多的设备。电脑端绝大多数浏览器都是支持的(除mac自带的safari浏览器)',
   },
@@ -168,7 +168,7 @@ const openVideo = (url: string) => {
             </div>
             <div class="video-info">
               <h3>插件使用教程</h3>
-              <p>深入了解本地生活直播助手所有功能和技巧</p>
+              <p>深入了解小鸟智播所有功能和技巧</p>
               <span class="video-duration">12:48</span>
             </div>
           </div>

@@ -11,7 +11,7 @@ const handleScroll = () => {
 }
 
 const downloadStableApp = () => {
-  window.open('https://tools.woftsun.cn/livetools3.5.3.zip', '_blank')
+  window.open('https://tools.woftsun.cn/livetools3.5.6.zip', '_blank')
   isDownloadDropdownOpen.value = false
 }
 
@@ -65,10 +65,10 @@ onUnmounted(() => {
             class="logo-text"
             style="color: #1e40af; margin: 0; font-weight: 700; font-size: 1.5rem"
           >
-            本地生活直播助手
+          小鸟智播
           </h2>
           <!-- 移动端显示图标 -->
-          <img class="logo-icon" src="/src/assets/icon.png" alt="本地生活直播助手" />
+          <img class="logo-icon" src="/src/assets/icon.png" alt="小鸟智播" />
         </RouterLink>
       </div>
 
