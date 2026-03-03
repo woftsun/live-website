@@ -10,23 +10,47 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
-const downloadStableApp = () => {
-  window.open('https://tools.woftsun.cn/livetools3.5.6.zip', '_blank')
+// 平台下载链接配置
+const platforms = [
+  {
+    id: 'douyin',
+    name: '抖音本地生活版',
+    desc: '适用于抖音本地生活商家',
+    url: 'https://tools.woftsun.cn/livetools3.5.7.zip',
+    version: 'v3.5.7',
+    color: '#1f2937',
+    comingSoon: false,
+    icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
+  },
+  {
+    id: 'shipinhao',
+    name: '视频号版',
+    desc: '适用于微信视频号商家',
+    url: 'https://tools.woftsun.cn/sphtools1.0.3.zip',
+    version: 'v1.0.3',
+    color: '#07c160',
+    comingSoon: false,
+    icon: `<path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM19.087 7.958c-3.96 0-7.175 2.724-7.175 6.076 0 3.353 3.215 6.077 7.175 6.077.772 0 1.514-.112 2.21-.315a.67.67 0 0 1 .559.076l1.484.87a.254.254 0 0 0 .13.042.228.228 0 0 0 .226-.23c0-.055-.022-.11-.037-.165l-.305-1.155a.46.46 0 0 1 .166-.519c1.43-1.05 2.342-2.606 2.342-4.34 0-3.693-3.215-6.417-6.775-6.417z"/>`,
+  },
+  {
+    id: 'douyin-ec',
+    name: '抖音电商版',
+    desc: '适用于抖音电商商家',
+    url: '',
+    version: '即将上线',
+    color: '#fe2c55',
+    comingSoon: true,
+    icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
+  },
+]
+
+const downloadPlatform = (url: string) => {
+  window.open(url, '_blank')
   isDownloadDropdownOpen.value = false
 }
 
-const downloadBetaApp = () => {
-  window.open('https://tools.woftsun.cn/livetools3.5.0.zip', '_blank')
-  isDownloadDropdownOpen.value = false
-}
-
-const downloadStableAndCloseMenu = () => {
-  downloadStableApp()
-  closeMobileMenu()
-}
-
-const downloadBetaAndCloseMenu = () => {
-  downloadBetaApp()
+const downloadPlatformAndCloseMenu = (url: string) => {
+  window.open(url, '_blank')
   closeMobileMenu()
 }
 
@@ -58,19 +82,10 @@ onUnmounted(() => {
 <template>
   <header :class="{ scrolled: isScrolled }">
     <div class="nav-container">
-      <div class="logo">
-        <RouterLink to="/" style="text-decoration: none">
-          <!-- 桌面端显示文字标题 -->
-          <h2
-            class="logo-text"
-            style="color: #1e40af; margin: 0; font-weight: 700; font-size: 1.5rem"
-          >
-          小鸟智播
-          </h2>
-          <!-- 移动端显示图标 -->
-          <img class="logo-icon" src="/src/assets/icon.png" alt="小鸟智播" />
-        </RouterLink>
-      </div>
+      <RouterLink to="/" class="logo">
+        <img src="/src/assets/icon.svg" alt="小鸟智播" class="logo-img" />
+        <span class="logo-text">小鸟智播</span>
+      </RouterLink>
 
       <!-- 桌面端导航 -->
       <nav class="main-nav">
@@ -101,14 +116,53 @@ onUnmounted(() => {
             </svg>
           </button>
           <div class="dropdown-menu" :class="{ show: isDownloadDropdownOpen }">
-            <button class="dropdown-item" @click="downloadStableApp">
-              <span class="version-badge stable">正式版</span>
-              <span class="version-desc">稳定版本，推荐使用</span>
+            <div class="dropdown-header">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#6b7280"
+                stroke-width="2"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7,10 12,15 17,10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>选择平台版本</span>
+            </div>
+            <button
+              v-for="platform in platforms"
+              :key="platform.id"
+              class="dropdown-item"
+              :class="{ 'coming-soon': platform.comingSoon }"
+              :disabled="platform.comingSoon"
+              @click="!platform.comingSoon && downloadPlatform(platform.url)"
+            >
+              <div class="platform-item-info">
+                <div
+                  class="platform-item-icon"
+                  :style="{ color: platform.comingSoon ? '#94a3b8' : platform.color }"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    v-html="platform.icon"
+                  ></svg>
+                </div>
+                <div class="platform-item-text">
+                  <span class="platform-item-name">{{ platform.name }}</span>
+                  <span class="platform-item-desc">{{ platform.desc }}</span>
+                </div>
+              </div>
+              <span
+                class="platform-item-version"
+                :class="{ 'coming-soon-badge': platform.comingSoon }"
+                >{{ platform.version }}</span
+              >
             </button>
-            <!-- <button class="dropdown-item" @click="downloadBetaApp">
-              <span class="version-badge beta">Beta版</span>
-              <span class="version-desc">测试版本，体验新功能</span>
-            </button> -->
           </div>
         </div>
         <!-- 移动端汉堡菜单按钮 -->
@@ -205,41 +259,72 @@ onUnmounted(() => {
           </svg>
           联系作者
         </RouterLink>
-        <button class="mobile-download-btn" @click="downloadStableAndCloseMenu">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
+        <div class="mobile-download-section">
+          <div class="mobile-download-label">下载客户端</div>
+          <button
+            v-for="platform in platforms"
+            :key="platform.id"
+            class="mobile-download-btn"
+            :class="{ 'mobile-coming-soon': platform.comingSoon }"
+            :disabled="platform.comingSoon"
+            @click="!platform.comingSoon && downloadPlatformAndCloseMenu(platform.url)"
           >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7,10 12,15 17,10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          下载正式版
-        </button>
-        <button class="mobile-download-btn mobile-beta-btn" @click="downloadBetaAndCloseMenu">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7,10 12,15 17,10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          下载Beta版
-        </button>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              :style="{ color: platform.comingSoon ? '#94a3b8' : platform.color }"
+              v-html="platform.icon"
+            ></svg>
+            <span class="mobile-btn-text">
+              <span class="mobile-btn-name">{{ platform.name }}</span>
+              <span
+                class="mobile-btn-version"
+                :class="{ 'coming-soon-text': platform.comingSoon }"
+                >{{ platform.version }}</span
+              >
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   </header>
 
   <RouterView />
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <h3>小鸟智播</h3>
+          <p>专业的直播自动化场控工具</p>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>产品</h4>
+            <RouterLink to="/features">功能介绍</RouterLink>
+            <RouterLink to="/pricing">定价方案</RouterLink>
+            <RouterLink to="/tutorial">使用教程</RouterLink>
+          </div>
+          <div class="footer-col">
+            <h4>支持平台</h4>
+            <span>抖音本地生活</span>
+            <span>微信视频号</span>
+            <span class="footer-coming">抖音电商（即将上线）</span>
+          </div>
+          <div class="footer-col">
+            <h4>关于</h4>
+            <RouterLink to="/contact">联系作者</RouterLink>
+            <RouterLink to="/about">关于我们</RouterLink>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; {{ new Date().getFullYear() }} 小鸟智播. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <style scoped>
@@ -273,11 +358,25 @@ header.scrolled {
   height: 70px;
 }
 
-.logo h2 {
-  color: #1e40af;
-  margin: 0;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1.15rem;
   font-weight: 700;
-  font-size: 1.5rem;
+  color: #1e40af;
 }
 
 .main-nav {
@@ -369,15 +468,16 @@ header.scrolled {
   right: 0;
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  min-width: 280px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  min-width: 320px;
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   margin-top: 0.5rem;
+  overflow: hidden;
 }
 
 .dropdown-menu.show {
@@ -386,16 +486,28 @@ header.scrolled {
   transform: translateY(0);
 }
 
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
 .dropdown-item {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.25rem;
   border: none;
   background: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   border-bottom: 1px solid #f3f4f6;
 }
 
@@ -404,39 +516,67 @@ header.scrolled {
 }
 
 .dropdown-item:hover {
-  background: #f8fafc;
+  background: #f0f7ff;
 }
 
-.version-badge {
+.platform-item-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.platform-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.platform-item-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.platform-item-name {
   font-weight: 600;
   font-size: 0.9rem;
-  margin-bottom: 0.25rem;
+  color: #1f2937;
 }
 
-.version-badge.stable {
-  color: #1e40af;
-}
-
-.version-badge.beta {
-  color: #f59e0b;
-}
-
-.version-desc {
-  font-size: 0.8rem;
+.platform-item-desc {
+  font-size: 0.75rem;
   color: #6b7280;
-  text-align: left;
+  margin-top: 0.125rem;
 }
 
-/* Logo 响应式显示 */
-.logo-text {
-  display: block;
+.platform-item-version {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  background: #f1f5f9;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  flex-shrink: 0;
 }
 
-.logo-icon {
-  display: none;
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+.platform-item-version.coming-soon-badge {
+  background: #fef3c7;
+  color: #92400e;
+  font-weight: 600;
+}
+
+.dropdown-item.coming-soon {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.dropdown-item.coming-soon:hover {
+  background: none;
 }
 
 /* 移动端汉堡菜单按钮 */
@@ -518,40 +658,162 @@ header.scrolled {
   padding-right: 1.5rem;
 }
 
+.mobile-download-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.mobile-download-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  padding: 0 0.25rem;
+}
+
 .mobile-download-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   width: 100%;
-  background: #1e40af;
-  color: white;
-  border: none;
-  padding: 1rem;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1.1rem;
+  background: #f8fafc;
+  color: #1f2937;
+  border: 1px solid #e2e8f0;
+  padding: 0.875rem 1rem;
+  border-radius: 10px;
   cursor: pointer;
-  margin-top: 2rem;
-  transition: all 0.3s ease;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
 }
 
 .mobile-download-btn:hover {
-  background: #1d4ed8;
+  background: #f0f7ff;
+  border-color: #3b82f6;
   transform: translateY(-1px);
 }
 
-.mobile-beta-btn {
-  background: #f59e0b;
-  margin-top: 1rem;
+.mobile-btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.mobile-beta-btn:hover {
-  background: #d97706;
+.mobile-btn-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.mobile-btn-version {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.125rem;
+}
+
+.mobile-btn-version.coming-soon-text {
+  color: #92400e;
+  font-weight: 600;
+}
+
+.mobile-coming-soon {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.mobile-coming-soon:hover {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  transform: none;
 }
 
 .desktop-only {
   display: block;
+}
+
+/* Footer */
+.site-footer {
+  background: #0f172a;
+  color: #94a3b8;
+  padding: 4rem 0 0;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #1e293b;
+}
+
+.footer-brand h3 {
+  color: #f8fafc;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand p {
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  max-width: 240px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 4rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-col h4 {
+  color: #f8fafc;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.footer-col a,
+.footer-col span {
+  color: #64748b;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: #e2e8f0;
+}
+
+.footer-coming {
+  color: #fbbf24 !important;
+  font-style: italic;
+  font-size: 0.85rem !important;
+}
+
+.footer-bottom {
+  padding: 1.5rem 0;
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: #475569;
 }
 
 @media (max-width: 768px) {
@@ -564,15 +826,6 @@ header.scrolled {
     padding: 0 1rem;
   }
 
-  /* 隐藏桌面端元素 */
-  .logo-text {
-    display: none;
-  }
-
-  .logo-icon {
-    display: block;
-  }
-
   .main-nav {
     display: none;
   }
@@ -583,6 +836,25 @@ header.scrolled {
 
   .mobile-menu-btn {
     display: block;
+  }
+
+  .footer-main {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .footer-brand p {
+    max-width: none;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-col {
+    align-items: center;
   }
 }
 </style>

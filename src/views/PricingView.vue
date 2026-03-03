@@ -1,41 +1,160 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-// 定价方案数据
-const pricingPlans = ref([
+const activePlatform = ref('douyin')
+
+// 平台配置
+const platformTabs = [
   {
-    id: 'monthly',
-    name: '月卡',
-    price: 25,
-    period: '月',
-    description: '适合短期体验用户',
-    features: ['支持基础功能', '同时可以一个直播间使用'],
-    buttonText: '联系作者购买',
-    popular: false,
+    id: 'full',
+    name: '全功能',
+    color: '#059669',
+    comingSoon: false,
+    icon: `<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`,
   },
   {
-    id: 'yearly',
-    name: '年卡',
-    price: 249,
-    period: '年',
-    description: '最受欢迎的选择',
-    features: ['支持所有功能', '可远程指导', '同时可以一个直播间使用'],
-    buttonText: '联系作者购买',
-    popular: true,
-    badge: '最畅销卡',
+    id: 'douyin',
+    name: '抖音本地生活',
+    color: '#1f2937',
+    comingSoon: false,
+    icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
   },
   {
-    id: 'lifetime',
-    name: '永久卡',
-    price: 699,
-    period: '永久',
-    description: '终身使用，成为代理',
-    features: ['限量500份', '可远程指导', '定制官网', '拿货7折优惠'],
-    buttonText: '联系作者购买',
-    popular: false,
-    badge: '代理',
+    id: 'shipinhao',
+    name: '视频号',
+    color: '#07c160',
+    comingSoon: false,
+    icon: `<path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM19.087 7.958c-3.96 0-7.175 2.724-7.175 6.076 0 3.353 3.215 6.077 7.175 6.077.772 0 1.514-.112 2.21-.315a.67.67 0 0 1 .559.076l1.484.87a.254.254 0 0 0 .13.042.228.228 0 0 0 .226-.23c0-.055-.022-.11-.037-.165l-.305-1.155a.46.46 0 0 1 .166-.519c1.43-1.05 2.342-2.606 2.342-4.34 0-3.693-3.215-6.417-6.775-6.417z"/>`,
   },
-])
+  {
+    id: 'douyin-ec',
+    name: '抖音电商',
+    color: '#fe2c55',
+    comingSoon: true,
+    icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
+  },
+]
+
+// 定价方案数据 - 按平台区分
+const pricingData: Record<
+  string,
+  Array<{
+    id: string
+    name: string
+    price: number
+    period: string
+    description: string
+    features: string[]
+    buttonText: string
+    popular: boolean
+    badge?: string
+  }>
+> = {
+  douyin: [
+    {
+      id: 'monthly',
+      name: '月卡',
+      price: 25,
+      period: '月',
+      description: '适合短期体验用户',
+      features: ['支持基础功能', '同时可以一个直播间使用'],
+      buttonText: '联系作者购买',
+      popular: false,
+    },
+    {
+      id: 'yearly',
+      name: '年卡',
+      price: 249,
+      period: '年',
+      description: '最受欢迎的选择',
+      features: ['支持所有功能', '可远程指导', '同时可以一个直播间使用'],
+      buttonText: '联系作者购买',
+      popular: true,
+      badge: '最畅销卡',
+    },
+    {
+      id: 'lifetime',
+      name: '永久卡',
+      price: 699,
+      period: '永久',
+      description: '终身使用，成为代理',
+      features: ['限量500份', '可远程指导', '定制官网', '拿货7折优惠'],
+      buttonText: '联系作者购买',
+      popular: false,
+      badge: '代理',
+    },
+  ],
+  shipinhao: [
+    {
+      id: 'monthly',
+      name: '月卡',
+      price: 25,
+      period: '月',
+      description: '适合短期体验用户',
+      features: ['支持基础功能', '同时可以一个直播间使用'],
+      buttonText: '联系作者购买',
+      popular: false,
+    },
+    {
+      id: 'yearly',
+      name: '年卡',
+      price: 249,
+      period: '年',
+      description: '最受欢迎的选择',
+      features: ['支持所有功能', '可远程指导', '同时可以一个直播间使用'],
+      buttonText: '联系作者购买',
+      popular: true,
+      badge: '最畅销卡',
+    },
+    {
+      id: 'lifetime',
+      name: '永久卡',
+      price: 699,
+      period: '永久',
+      description: '终身使用，成为代理',
+      features: ['限量500份', '可远程指导', '定制官网', '拿货7折优惠'],
+      buttonText: '联系作者购买',
+      popular: false,
+      badge: '代理',
+    },
+  ],
+  full: [
+    {
+      id: 'full-monthly',
+      name: '全功能月卡',
+      price: 40,
+      period: '月',
+      description: '解锁全部平台所有功能',
+      features: ['支持所有平台全部功能', '同时可以一个直播间使用'],
+      buttonText: '联系作者购买',
+      popular: false,
+    },
+    {
+      id: 'full-yearly',
+      name: '全功能年卡',
+      price: 399,
+      period: '年',
+      description: '全功能最佳性价比',
+      features: ['支持所有平台全部功能', '可远程指导', '同时可以一个直播间使用'],
+      buttonText: '联系作者购买',
+      popular: true,
+      badge: '推荐',
+    },
+    {
+      id: 'full-lifetime',
+      name: '全功能永久卡',
+      price: 999,
+      period: '永久',
+      description: '全功能终身使用，成为代理',
+      features: ['支持所有平台全部功能', '新增平台不额外收费', '限量500份', '可远程指导', '定制官网', '拿货7折优惠'],
+      buttonText: '联系作者购买',
+      popular: false,
+      badge: '代理',
+    },
+  ],
+}
+
+const currentPlans = computed(() => pricingData[activePlatform.value] || pricingData.douyin)
 </script>
 
 <template>
@@ -48,20 +167,51 @@ const pricingPlans = ref([
       </div>
     </section>
 
+    <!-- Platform Tabs -->
+    <section class="platform-tabs-section">
+      <div class="container">
+        <div class="platform-tabs">
+          <button
+            v-for="tab in platformTabs"
+            :key="tab.id"
+            class="platform-tab"
+            :class="{ active: activePlatform === tab.id, 'tab-coming-soon': tab.comingSoon }"
+            :disabled="tab.comingSoon"
+            @click="!tab.comingSoon && (activePlatform = tab.id)"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              :fill="tab.id === 'full' ? 'none' : 'currentColor'"
+              :stroke="tab.id === 'full' ? 'currentColor' : 'none'"
+              :stroke-width="tab.id === 'full' ? '2' : '0'"
+              :style="{
+                color: tab.comingSoon ? '#94a3b8' : activePlatform === tab.id ? 'white' : tab.color,
+              }"
+              v-html="tab.icon"
+            ></svg>
+            {{ tab.name }}
+            <span v-if="tab.comingSoon" class="tab-soon-badge">即将上线</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Pricing Plans -->
     <section class="pricing-section">
       <div class="container">
         <div class="pricing-grid">
           <div
-            v-for="plan in pricingPlans"
-            :key="plan.id"
+            v-for="plan in currentPlans"
+            :key="plan.id + activePlatform"
             class="pricing-card"
             :class="{
               popular: plan.popular,
               featured: plan.badge === '推荐',
             }"
           >
-            <div v-if="plan.badge" class="plan-badge" :class="{ agent: plan.badge === '代理' }">
+            <div v-if="plan.badge" class="plan-badge" :class="{ agent: plan.badge === '代理' || plan.badge === '全功能代理', full: plan.badge?.startsWith('全功能') }">
               {{ plan.badge }}
             </div>
             <div class="plan-header">
@@ -110,7 +260,24 @@ const pricingPlans = ref([
             </svg>
           </div>
           <div class="warning-content">
-            <h3>⚠️ 重要安全提醒</h3>
+            <h3>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                style="flex-shrink: 0"
+              >
+                <path
+                  d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                />
+                <line x1="12" y1="9" x2="12" y2="13" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+              重要安全提醒
+            </h3>
             <p>
               <strong>严禁破解行为：</strong>我们采用先进的反破解技术和实时监控系统。
               一旦发现任何破解、逆向工程或非法使用行为，相关店铺账号将被<span class="highlight"
@@ -119,15 +286,49 @@ const pricingPlans = ref([
             </p>
             <div class="warning-features">
               <div class="feature-item">
-                <span class="feature-icon">🔒</span>
+                <span class="feature-icon">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#dc2626"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                </span>
                 <span>实时监控系统</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">🛡️</span>
+                <span class="feature-icon">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#dc2626"
+                    stroke-width="2"
+                  >
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </span>
                 <span>反破解技术</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">⚡</span>
+                <span class="feature-icon">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#dc2626"
+                    stroke-width="2"
+                  >
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                </span>
                 <span>即时封禁机制</span>
               </div>
             </div>
@@ -178,10 +379,14 @@ main {
   z-index: 2;
 }
 
+.page-header .section-title::after {
+  display: block;
+}
+
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #6b7280;
+  color: #1f2937;
   margin-bottom: 1rem;
   position: relative;
 }
@@ -199,14 +404,83 @@ main {
 }
 
 .section-subtitle {
-  color: #666;
-  font-size: 1rem;
+  color: #6b7280;
+  font-size: 1.05rem;
   margin-top: 1rem;
+}
+
+/* Platform Tabs */
+.platform-tabs-section {
+  padding: 2rem 0 0;
+  background: #ffffff;
+}
+
+.platform-tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--c-bg-muted, #f1f5f9);
+  padding: 4px;
+  border-radius: var(--r-md, 10px);
+  margin: 0 auto;
+}
+
+.platform-tabs-section .container {
+  display: flex;
+  justify-content: center;
+}
+
+.platform-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 24px;
+  border: none;
+  background: transparent;
+  color: var(--c-text-3, #64748b);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.platform-tab:hover {
+  color: var(--c-text, #1f2937);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.platform-tab.active {
+  background: var(--c-primary, #3b82f6);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(59, 130, 246, 0.3);
+}
+
+.platform-tab.tab-coming-soon {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.platform-tab.tab-coming-soon:hover {
+  color: var(--c-text-3, #64748b);
+  background: transparent;
+}
+
+.tab-soon-badge {
+  font-size: 0.55rem;
+  background: #fef3c7;
+  color: #92400e;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 /* Pricing Section */
 .pricing-section {
-  padding: 6rem 0;
+  padding: 4rem 0 6rem;
   background: #f8fafc;
 }
 
@@ -295,6 +569,21 @@ main {
 
 .plan-badge.agent:hover {
   box-shadow: 0 6px 20px rgba(255, 154, 86, 0.5);
+}
+
+.plan-badge.full {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.plan-badge.full:hover {
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.plan-badge.full.agent {
+  background: linear-gradient(135deg, #059669 0%, #f97316 100%);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 .plan-header {
@@ -532,7 +821,10 @@ main {
 }
 
 .feature-icon {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 /* CTA Section */
@@ -546,12 +838,12 @@ main {
 .cta-content h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #6b7280;
+  color: #1f2937;
   margin-bottom: 1rem;
 }
 
 .cta-content p {
-  color: #666;
+  color: #6b7280;
   font-size: 1.1rem;
   margin-bottom: 3rem;
   max-width: 600px;
@@ -608,7 +900,7 @@ main {
 /* 响应式设计 */
 @media (max-width: 1200px) {
   .pricing-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 }

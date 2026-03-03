@@ -1,36 +1,42 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-// 常见问题数据 - 从功能页面转移过来
+// 常见问题数据
 const faqs = ref([
   {
     id: 1,
-    question: '❓ 小鸟智播支持哪些设备？',
+    question: '小鸟智播支持哪些平台和设备？',
     answer:
-      '目前只支持电脑端，后续也会支持更多的设备。电脑端绝大多数浏览器都是支持的(除mac自带的safari浏览器)',
+      '目前支持抖音本地生活和微信视频号两个平台，抖音电商版即将上线。均为电脑端浏览器插件，电脑端绝大多数浏览器都是支持的（除 Mac 自带的 Safari 浏览器外），推荐使用 Chrome 浏览器。',
   },
   {
     id: 2,
-    question: '🔧 使用直播助手直播间会被风控吗？',
+    question: '使用直播助手直播间会被风控吗？',
     answer:
       '完全不会，目前该助手已稳定两年多，几百家店铺使用，目前一个被风控的都没有，我们代码底层也做了模拟人工操作的逻辑，可以放心的使用啦。',
   },
   {
     id: 3,
-    question: '💻 会限制店铺或者是限制设备吗',
+    question: '会限制店铺或者是限制设备吗？',
     answer:
-      '目前是绑定微信的，不限制店铺和设备使用的，但同时只能一个店铺（账号）登录，如果需要多个店铺（账号）开播，可以联系作者购买会员',
+      '目前是绑定微信的，不限制店铺和设备使用的，但同时只能一个店铺（账号）登录，如果需要多个店铺（账号）开播，可以联系作者购买会员。',
   },
   {
     id: 4,
-    question: '💰 购买了年卡或者永久卡后续新功能更新或者助手价格调整后会涨价吗？',
-    answer: '购买会员后，无论什么卡只要有效期内，都不会涨价。会员功能都第一时间免费更新的',
+    question: '各平台版本的区别是什么？',
+    answer:
+      '各版本分别针对不同平台深度优化。抖音本地生活版支持6大核心功能（自动弹窗、发福袋、发券、发评、回复、加库存），视频号版目前支持3大核心功能（自动弹窗、发评、回复），抖音电商版即将上线，功能与视频号版相同（自动弹窗、发评、回复）。各版本需要分别下载安装。',
   },
   {
     id: 5,
-    question: '📒 我可以向作者提需求吗？',
+    question: '购买了年卡或者永久卡后续新功能更新会涨价吗？',
+    answer: '购买会员后，无论什么卡只要有效期内，都不会涨价。会员功能都第一时间免费更新的。',
+  },
+  {
+    id: 6,
+    question: '我可以向作者提需求吗？',
     answer:
-      '当然可以，我们会一直收集用户的需求，如果需要的小伙伴多会第一时间加入开发列表的，购买永久卡小功能可以加急哦',
+      '当然可以，我们会一直收集用户的需求，如果需要的小伙伴多会第一时间加入开发列表的，购买永久卡小功能可以加急哦。',
   },
 ])
 
@@ -226,9 +232,9 @@ main {
 
 /* Page Header */
 .page-header {
-  padding: 2rem 0;
+  padding: 4rem 0 2rem 0;
   text-align: center;
-  background: #f8fafc;
+  background: #ffffff;
 }
 
 .page-header h1 {
@@ -236,12 +242,26 @@ main {
   font-weight: 700;
   color: #1f2937;
   margin-bottom: 1rem;
+  position: relative;
+}
+
+.page-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: #3b82f6;
+  border-radius: 2px;
 }
 
 .page-header p {
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   color: #6b7280;
   margin-bottom: 2rem;
+  margin-top: 1.5rem;
 }
 
 /* Browser Compatibility Notice */

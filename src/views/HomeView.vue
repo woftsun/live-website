@@ -1,6 +1,40 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+// 支持平台数据
+const supportedPlatforms = ref([
+  {
+    id: 'douyin',
+    name: '抖音本地生活',
+    desc: '自动弹窗 · 发福袋 · 发券 · 发评 · 回复 · 加库存',
+    featureCount: 6,
+    color: '#1f2937',
+    bgColor: '#f1f5f9',
+    comingSoon: false,
+    icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
+  },
+  {
+    id: 'shipinhao',
+    name: '微信视频号',
+    desc: '自动弹窗 · 自动发评 · 自动回复',
+    featureCount: 3,
+    color: '#07c160',
+    bgColor: '#ecfdf5',
+    comingSoon: false,
+    icon: `<path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM19.087 7.958c-3.96 0-7.175 2.724-7.175 6.076 0 3.353 3.215 6.077 7.175 6.077.772 0 1.514-.112 2.21-.315a.67.67 0 0 1 .559.076l1.484.87a.254.254 0 0 0 .13.042.228.228 0 0 0 .226-.23c0-.055-.022-.11-.037-.165l-.305-1.155a.46.46 0 0 1 .166-.519c1.43-1.05 2.342-2.606 2.342-4.34 0-3.693-3.215-6.417-6.775-6.417z"/>`,
+  },
+  {
+    id: 'douyin-ec',
+    name: '抖音电商',
+    desc: '自动弹窗 · 自动发评 · 自动回复',
+    featureCount: 3,
+    color: '#fe2c55',
+    bgColor: '#fef2f2',
+    comingSoon: true,
+    icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
+  },
+])
+
 // 核心功能数据
 const features = ref([
   {
@@ -238,8 +272,41 @@ const getTestimonialsByColumn = () => {
       <span class="orb orb3"></span>
       <div class="hero-container">
         <div class="hero-content">
+          <div class="hero-badge">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polygon
+                points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+              ></polygon>
+            </svg>
+            多平台支持
+          </div>
           <h1 class="hero-title">自动化场控工具</h1>
           <p class="hero-subtitle">工具解放双手、产品穿透客户，让您的直播更专业、更高效</p>
+          <div class="hero-platforms">
+            <span
+              v-for="platform in supportedPlatforms"
+              :key="platform.id"
+              class="hero-platform-tag"
+              :style="{ '--tag-color': platform.color }"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                :style="{ color: platform.color }"
+                v-html="platform.icon"
+              ></svg>
+              {{ platform.name }}
+            </span>
+          </div>
         </div>
         <div class="hero-image">
           <div class="product-image">
@@ -248,6 +315,52 @@ const getTestimonialsByColumn = () => {
         </div>
       </div>
     </section>
+
+    <!-- Supported Platforms Section -->
+    <section class="platforms-section">
+      <div class="container">
+        <h2 class="section-title">支持平台</h2>
+        <p class="section-subtitle">针对不同平台深度优化，提供专业的直播自动化方案</p>
+        <div class="platforms-grid">
+          <div
+            v-for="platform in supportedPlatforms"
+            :key="platform.id"
+            class="platform-card"
+            :class="{ 'platform-card--coming-soon': platform.comingSoon }"
+            :style="{ '--card-accent': platform.color }"
+          >
+            <span v-if="platform.comingSoon" class="platform-coming-badge">即将上线</span>
+            <div class="platform-card-header">
+              <div
+                class="platform-icon-wrapper"
+                :style="{ background: platform.comingSoon ? '#f1f5f9' : platform.bgColor }"
+              >
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  :style="{ color: platform.comingSoon ? '#94a3b8' : platform.color }"
+                  v-html="platform.icon"
+                ></svg>
+              </div>
+              <div class="platform-meta">
+                <h3>{{ platform.name }}</h3>
+                <span class="platform-feature-count">{{ platform.featureCount }} 项核心功能</span>
+              </div>
+            </div>
+            <p class="platform-features-desc">{{ platform.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">
+      <span class="divider-dot"></span>
+      <span class="divider-line"></span>
+      <span class="divider-dot"></span>
+    </div>
 
     <!-- Core Features Section -->
     <section class="features-preview">
@@ -276,31 +389,38 @@ const getTestimonialsByColumn = () => {
       </div>
     </section>
 
+    <!-- Section Divider -->
+    <div class="section-divider section-divider--light">
+      <span class="divider-dot"></span>
+      <span class="divider-line"></span>
+      <span class="divider-dot"></span>
+    </div>
+
     <!-- Testimonials Section -->
     <section class="testimonials">
       <div class="container">
         <h2 class="section-title">用户评价</h2>
         <p class="section-subtitle">绝大多数直播从业者都主动选择使用小鸟智播</p>
-        <div class="testimonials-container">
-          <!-- 动态渲染评价列 -->
-          <div
-            v-for="(column, columnIndex) in getTestimonialsByColumn()"
-            :key="columnIndex"
-            class="testimonials-column"
-            :class="columnIndex % 2 === 0 ? 'scroll-up' : 'scroll-down'"
-          >
-            <div v-for="testimonial in column" :key="testimonial.id" class="testimonial-card">
-              <div class="testimonial-content">
-                <p>{{ testimonial.content }}</p>
+      </div>
+      <div class="testimonials-container">
+        <!-- 动态渲染评价列 -->
+        <div
+          v-for="(column, columnIndex) in getTestimonialsByColumn()"
+          :key="columnIndex"
+          class="testimonials-column"
+          :class="columnIndex % 2 === 0 ? 'scroll-up' : 'scroll-down'"
+        >
+          <div v-for="testimonial in column" :key="testimonial.id" class="testimonial-card">
+            <div class="testimonial-content">
+              <p>{{ testimonial.content }}</p>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <img :src="testimonial.author.avatar" :alt="testimonial.author.name" />
               </div>
-              <div class="testimonial-author">
-                <div class="author-avatar">
-                  <img :src="testimonial.author.avatar" :alt="testimonial.author.name" />
-                </div>
-                <div class="author-info">
-                  <h4>{{ testimonial.author.name }}</h4>
-                  <p>{{ testimonial.author.role }}</p>
-                </div>
+              <div class="author-info">
+                <h4>{{ testimonial.author.name }}</h4>
+                <p>{{ testimonial.author.role }}</p>
               </div>
             </div>
           </div>
@@ -318,6 +438,7 @@ main {
 }
 
 .container {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -326,7 +447,7 @@ main {
 .hero {
   background: #ffffff;
   color: #1f2937;
-  padding: 6rem 0 6rem 0;
+  padding: 6rem 0 8rem 0;
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -364,14 +485,13 @@ main {
 .hero::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 66%;
-  height: 100%;
-  background: transparent;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, transparent, rgba(248, 250, 252, 0.5));
   pointer-events: none;
-  border-radius: 20px;
+  z-index: 1;
 }
 
 .hero-container {
@@ -425,13 +545,55 @@ main {
   border-radius: 2px;
 }
 
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(59, 130, 246, 0.08);
+  color: #3b82f6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  margin-bottom: 1.5rem;
+}
+
 .hero-subtitle {
   font-size: 1.4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   opacity: 0.9;
   line-height: 1.6;
   color: #6b7280;
   position: relative;
+}
+
+.hero-platforms {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-platform-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #374151;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.hero-platform-tag:hover {
+  border-color: var(--tag-color, #3b82f6);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .hero-buttons {
@@ -530,8 +692,8 @@ main {
   text-align: center;
   font-size: 2.5rem;
   font-weight: 700;
-  color: #6b7280;
-  margin-bottom: 4rem;
+  color: #1f2937;
+  margin-bottom: 1rem;
   position: relative;
 }
 
@@ -549,28 +711,31 @@ main {
 
 /* Testimonials Section */
 .testimonials {
-  padding: 4rem 0 6rem 0;
-  background: white;
+  padding: 5rem 0 6rem 0;
+  background: #fafbfd;
   position: relative;
 }
 
 .testimonials::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: -60px;
   left: 0;
   right: 0;
-  height: 100px;
-  background: transparent;
+  height: 60px;
+  background: linear-gradient(180deg, white, #fafbfd);
   pointer-events: none;
 }
 
 .section-subtitle {
   text-align: center;
-  color: #666;
-  font-size: 1rem;
-  margin-bottom: 2.5rem;
-  margin-top: -0.625rem;
+  color: #6b7280;
+  font-size: 1.05rem;
+  margin-bottom: 3.5rem;
+  margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .testimonials-container {
@@ -595,23 +760,23 @@ main {
   background:
     linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.6) 15%,
-      rgba(255, 255, 255, 0.2) 25%,
+      rgba(250, 251, 253, 0.95) 0%,
+      rgba(250, 251, 253, 0.6) 15%,
+      rgba(250, 251, 253, 0.2) 25%,
       transparent 35%,
       transparent 65%,
-      rgba(255, 255, 255, 0.2) 75%,
-      rgba(255, 255, 255, 0.6) 85%,
-      rgba(255, 255, 255, 0.9) 100%
+      rgba(250, 251, 253, 0.2) 75%,
+      rgba(250, 251, 253, 0.6) 85%,
+      rgba(250, 251, 253, 0.95) 100%
     ),
     linear-gradient(
       to right,
-      rgba(255, 255, 255, 0.8) 0%,
-      rgba(255, 255, 255, 0.3) 10%,
+      rgba(250, 251, 253, 0.8) 0%,
+      rgba(250, 251, 253, 0.3) 10%,
       transparent 20%,
       transparent 80%,
-      rgba(255, 255, 255, 0.3) 90%,
-      rgba(255, 255, 255, 0.8) 100%
+      rgba(250, 251, 253, 0.3) 90%,
+      rgba(250, 251, 253, 0.8) 100%
     );
   pointer-events: none;
   z-index: 10;
@@ -720,12 +885,143 @@ main {
   font-size: 0.875rem;
 }
 
+/* Platforms Section */
+.platforms-section {
+  padding: 5rem 0;
+  background: #f8fafc;
+  position: relative;
+}
+
+.platforms-section::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, transparent, #f8fafc);
+  pointer-events: none;
+}
+
+.platforms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.platform-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.platform-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--card-accent, #3b82f6);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.platform-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  border-color: transparent;
+}
+
+.platform-card:hover::before {
+  opacity: 1;
+}
+
+.platform-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.platform-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.platform-meta h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.platform-feature-count {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.platform-features-desc {
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.platform-card--coming-soon {
+  opacity: 0.7;
+  position: relative;
+}
+
+.platform-card--coming-soon:hover {
+  transform: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.platform-coming-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #fef3c7;
+  color: #92400e;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid #fde68a;
+}
+
 /* Features Preview */
 .features-preview {
-  padding: 4rem 0;
+  padding: 5rem 0 4rem;
   background: white;
   position: relative;
   overflow: hidden;
+}
+
+.features-preview::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, #f8fafc, white);
+  pointer-events: none;
 }
 
 .features-grid {
@@ -772,6 +1068,33 @@ main {
 .feature-card p {
   color: #6b7280;
   line-height: 1.6;
+}
+
+/* Section Divider */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 1rem 0;
+  background: white;
+}
+
+.section-divider--light {
+  background: white;
+}
+
+.divider-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.divider-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
 }
 
 @keyframes fadeInUp {
@@ -879,6 +1202,10 @@ main {
   .product-image {
     max-width: 700px;
   }
+
+  .platforms-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -907,9 +1234,23 @@ main {
     align-items: center;
   }
 
+  .hero-platforms {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .product-image {
     max-width: 500px;
     transform: translateY(20px);
+  }
+
+  .platforms-section {
+    padding: 3rem 0;
+  }
+
+  .platforms-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
   }
 
   .testimonials-container {

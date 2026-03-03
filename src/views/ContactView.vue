@@ -28,37 +28,59 @@ const contactMethods = [
   },
 ]
 
-// 插件列表（为后续扩展预留）
+// 插件列表
 const plugins = [
   {
     id: 1,
-    name: '小鸟智播-本地生活',
-    description: '专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能',
+    name: '小鸟智播-抖音本地生活',
+    description: '专为抖音本地生活商家打造的智能直播工具，全方位覆盖直播自动化需求',
     status: '已发布',
-    version: 'v3.2.5',
+    version: 'v3.5.6',
     users: '1500+',
     features: ['自动弹窗', '自动发福袋', '自动发券', '自动发评', '自动回复', '自动加库存'],
     link: '/pricing',
+    platform: 'douyin',
+    platformColor: '#1f2937',
+    platformIcon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
   },
   {
-    id: 1,
+    id: 2,
     name: '小鸟智播-视频号',
-    description: '专为微信视频号商家打造的智能直播工具，支持自动弹窗、自动发评、自动回复等功能',
+    description: '专为微信视频号商家打造的智能直播工具，支持核心自动化功能',
     status: '已发布',
     version: 'v1.0.3',
     users: '500+',
     features: ['自动弹窗', '自动发评', '自动回复'],
     link: '/pricing',
+    platform: 'shipinhao',
+    platformColor: '#07c160',
+    platformIcon: `<path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM19.087 7.958c-3.96 0-7.175 2.724-7.175 6.076 0 3.353 3.215 6.077 7.175 6.077.772 0 1.514-.112 2.21-.315a.67.67 0 0 1 .559.076l1.484.87a.254.254 0 0 0 .13.042.228.228 0 0 0 .226-.23c0-.055-.022-.11-.037-.165l-.305-1.155a.46.46 0 0 1 .166-.519c1.43-1.05 2.342-2.606 2.342-4.34 0-3.693-3.215-6.417-6.775-6.417z"/>`,
   },
   {
-    id: 2,
+    id: 4,
+    name: '小鸟智播-抖音电商',
+    description: '专为抖音电商商家打造的智能直播工具，功能持续开发中',
+    status: '开发中',
+    version: '即将上线',
+    users: '--',
+    features: ['自动弹窗', '自动发评', '自动回复'],
+    link: '/features',
+    platform: 'douyin-ec',
+    platformColor: '#fe2c55',
+    platformIcon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
+  },
+  {
+    id: 3,
     name: '摸鱼倒计时',
-    description: '摸鱼小时钟',
+    description: '轻松有趣的摸鱼时钟工具，让等待变得有趣',
     status: '已发布',
     version: 'v2.0.0',
     users: '10000+',
     features: ['下班倒计时', '周末倒计时', '节假日倒计时', '发工资倒计时'],
     link: '/pricing',
+    platform: 'other',
+    platformColor: '#6b7280',
+    platformIcon: `<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>`,
   },
 ]
 
@@ -194,10 +216,32 @@ const advantages = [
           <div v-for="plugin in plugins" :key="plugin.id" class="plugin-card">
             <div class="plugin-header">
               <div class="plugin-title-row">
-                <h3>{{ plugin.name }}</h3>
+                <div class="plugin-name-group">
+                  <div
+                    class="plugin-platform-icon"
+                    :style="{
+                      background: plugin.platformColor + '10',
+                      color: plugin.platformColor,
+                    }"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      :fill="plugin.platform === 'other' ? 'none' : 'currentColor'"
+                      :stroke="plugin.platform === 'other' ? 'currentColor' : 'none'"
+                      stroke-width="2"
+                      v-html="plugin.platformIcon"
+                    ></svg>
+                  </div>
+                  <h3>{{ plugin.name }}</h3>
+                </div>
                 <span
                   class="plugin-status"
-                  :class="plugin.status === '已发布' ? 'published' : 'development'"
+                  :class="{
+                    published: plugin.status === '已发布',
+                    development: plugin.status === '开发中',
+                  }"
                 >
                   {{ plugin.status }}
                 </span>
@@ -279,10 +323,14 @@ main {
   text-align: center;
 }
 
+.page-header .section-title::after {
+  display: block;
+}
+
 .section-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #6b7280;
+  color: #1f2937;
   margin-bottom: 1rem;
   position: relative;
 }
@@ -300,8 +348,8 @@ main {
 }
 
 .section-subtitle {
-  color: #666;
-  font-size: 1rem;
+  color: #6b7280;
+  font-size: 1.05rem;
   margin-top: 1rem;
 }
 
@@ -541,10 +589,27 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.plugin-name-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.plugin-platform-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .plugin-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 600;
   color: #1f2937;
 }
@@ -675,12 +740,12 @@ main {
 .cta-content h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #6b7280;
+  color: #1f2937;
   margin-bottom: 1rem;
 }
 
 .cta-content p {
-  color: #666;
+  color: #6b7280;
   font-size: 1.1rem;
   margin-bottom: 3rem;
   max-width: 600px;
