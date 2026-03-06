@@ -169,12 +169,80 @@
         "popular": false,
         "badge": ""
       }
+    ],
+    "022801": [
+      {
+        "id": "monthly",
+        "name": "月卡",
+        "price": 29,
+        "period": "月",
+        "description": "适合短期体验用户",
+        "features": ["支持所有功能", "免费更新", "同时可以一个直播间使用"],
+        "buttonText": "联系作者购买",
+        "popular": false
+      },
+      {
+        "id": "yearly",
+        "name": "年卡",
+        "price": 299,
+        "period": "年",
+        "description": "最受欢迎的选择",
+        "features": ["支持所有功能", "免费更新", "同时可以一个直播间使用"],
+        "buttonText": "联系作者购买",
+        "popular": true,
+        "badge": "最畅销卡"
+      },
+      {
+        "id": "lifetime",
+        "name": "永久卡",
+        "price": 699,
+        "period": "永久",
+        "description": "终身使用",
+        "features": ["限量500份", "免费更新", "永久使用"],
+        "buttonText": "联系作者购买",
+        "popular": false,
+        "badge": ""
+      }
+    ],
+    "030301": [
+      {
+        "id": "monthly",
+        "name": "月卡",
+        "price": 29,
+        "period": "月",
+        "description": "适合短期体验用户",
+        "features": ["支持所有功能", "免费更新", "同时可以一个直播间使用"],
+        "buttonText": "联系作者购买",
+        "popular": false
+      },
+      {
+        "id": "yearly",
+        "name": "年卡",
+        "price": 299,
+        "period": "年",
+        "description": "最受欢迎的选择",
+        "features": ["支持所有功能", "免费更新", "同时可以一个直播间使用"],
+        "buttonText": "联系作者购买",
+        "popular": true,
+        "badge": "最畅销卡"
+      },
+      {
+        "id": "lifetime",
+        "name": "永久卡",
+        "price": 699,
+        "period": "永久",
+        "description": "终身使用",
+        "features": ["限量500份", "免费更新", "永久使用"],
+        "buttonText": "联系作者购买",
+        "popular": false,
+        "badge": ""
+      }
     ]
   },
   "contact": {
     "1": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/livetools3.5.6.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/livetools3.5.7.zip",
       "contactMethods": [
         {
           "id": 1,
@@ -188,7 +256,7 @@
       "plugins": [
         {
           "id": 1,
-          "name": "本地生活直播助手",
+          "name": "小鸟智播",
           "description": "专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能",
           "status": "已发布",
           "version": "v3.2.5",
@@ -200,7 +268,7 @@
     },
     "1127": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/young/livetools3.5.6.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/young/livetools3.5.7.zip",
       "contactMethods": [
         {
           "id": 1,
@@ -214,7 +282,7 @@
       "plugins": [
         {
           "id": 1,
-          "name": "本地生活直播助手",
+          "name": "小鸟智播",
           "description": "专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能",
           "status": "已发布",
           "version": "v3.4.1",
@@ -226,7 +294,7 @@
     },
     "0129": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/kaile/livetools3.5.6.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/kaile/livetools3.5.7.zip",
       "contactMethods": [
         {
           "id": 1,
@@ -240,7 +308,7 @@
       "plugins": [
         {
           "id": 1,
-          "name": "本地生活直播助手",
+          "name": "小鸟智播",
           "description": "专为本地生活商家打造的智能直播工具，支持自动弹窗、发福袋、发券等功能",
           "status": "已发布",
           "version": "v3.4.1",
@@ -252,7 +320,7 @@
     },
     "0205": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/lc/livetools3.5.6.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/lc/livetools3.5.7.zip",
       "contactMethods": [
         {
           "id": 1,
@@ -278,13 +346,65 @@
     },
     "0206": {
       "authorInfo": null,
-      "downLoadLink": "https://agent.woftsun.cn/plugins/fish/livetools3.5.6.zip",
+      "downLoadLink": "https://agent.woftsun.cn/plugins/fish/livetools3.5.7.zip",
       "contactMethods": [
         {
           "id": 1,
           "title": "微信联系",
           "description": "扫码添加作者微信，获取一对一技术支持",
           "qrcode": "https://agent.woftsun.cn/image/fish.png",
+          "type": "wechat",
+          "note": "工作时间：8:00-24:00"
+        }
+      ],
+      "plugins": [
+        {
+          "id": 1,
+          "name": "小鸟智播-视频号",
+          "description": "专为微信视频号商家打造的智能直播工具，支持自动弹窗、自动发评、自动回复等功能",
+          "status": "已发布",
+          "version": "v1.0.3",
+          "users": "1500+",
+          "features": ["自动弹窗", "自动发评", "自动回复"],
+          "link": "/pricing"
+        }
+      ]
+    },
+    "022801": {
+      "authorInfo": null,
+      "downLoadLink": "https://agent.woftsun.cn/plugins/study/livetools3.5.7.zip",
+      "contactMethods": [
+        {
+          "id": 1,
+          "title": "微信联系",
+          "description": "扫码添加作者微信，获取一对一技术支持",
+          "qrcode": "https://agent.woftsun.cn/image/study.png",
+          "type": "wechat",
+          "note": "工作时间：8:00-24:00"
+        }
+      ],
+      "plugins": [
+        {
+          "id": 1,
+          "name": "小鸟智播-视频号",
+          "description": "专为微信视频号商家打造的智能直播工具，支持自动弹窗、自动发评、自动回复等功能",
+          "status": "已发布",
+          "version": "v1.0.3",
+          "users": "1500+",
+          "features": ["自动弹窗", "自动发评", "自动回复"],
+          "link": "/pricing"
+        }
+      ]
+    },
+    "030301": {
+      "authorInfo": null,
+      "downLoadLink": "https://agent.woftsun.cn/plugins/bo/livetools3.5.7.zip",
+      "contactMethods": [
+        {
+          "id": 1,
+          "title": "微信联系",
+          "description": "扫码添加作者微信，获取一对一技术支持",
+          "qrcode": "https://agent.woftsun.cn/image/bo.png",
           "type": "wechat",
           "note": "工作时间：8:00-24:00"
         }

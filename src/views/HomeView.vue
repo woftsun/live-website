@@ -59,7 +59,7 @@ const features = ref([
 const testimonials = ref([
   {
     id: 1,
-    content: '本地生活直播助手大大提高了我的直播效率，自动发评和自动回复功能非常实用。',
+    content: '小鸟智播大大提高了我的直播效率，自动发评和自动回复功能非常实用。',
     author: {
       name: '麦当****旗舰店',
       role: '美食主播',
@@ -280,7 +280,7 @@ const getTestimonialsByColumn = () => {
     <section class="testimonials">
       <div class="container">
         <h2 class="section-title">用户评价</h2>
-        <p class="section-subtitle">绝大多数直播从业者都主动选择使用本地生活直播助手</p>
+        <p class="section-subtitle">绝大多数直播从业者都主动选择使用小鸟智播</p>
         <div class="testimonials-container">
           <!-- 动态渲染评价列 -->
           <div
