@@ -8,7 +8,7 @@ const platformFilters = [
   { id: 'all', name: '全部功能', icon: '' },
   { id: 'douyin', name: '抖音本地生活', color: '#1f2937' },
   { id: 'shipinhao', name: '视频号', color: '#07c160' },
-  { id: 'douyin-ec', name: '抖音电商', color: '#fe2c55', comingSoon: true },
+  { id: 'douyin-ec', name: '抖音电商', color: '#fe2c55', comingSoon: false },
 ]
 
 // 核心功能数据 - 与首页保持一致

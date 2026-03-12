@@ -30,7 +30,7 @@ const platformTabs = [
     id: 'douyin-ec',
     name: '抖音电商',
     color: '#fe2c55',
-    comingSoon: true,
+    comingSoon: false,
     icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
   },
 ]
@@ -146,7 +146,14 @@ const pricingData: Record<
       price: 999,
       period: '永久',
       description: '全功能终身使用，成为代理',
-      features: ['支持所有平台全部功能', '新增平台不额外收费', '限量500份', '可远程指导', '定制官网', '拿货7折优惠'],
+      features: [
+        '支持所有平台全部功能',
+        '新增平台不额外收费',
+        '限量500份',
+        '可远程指导',
+        '定制官网',
+        '拿货7折优惠',
+      ],
       buttonText: '联系作者购买',
       popular: false,
       badge: '代理',
@@ -211,7 +218,14 @@ const currentPlans = computed(() => pricingData[activePlatform.value] || pricing
               featured: plan.badge === '推荐',
             }"
           >
-            <div v-if="plan.badge" class="plan-badge" :class="{ agent: plan.badge === '代理' || plan.badge === '全功能代理', full: plan.badge?.startsWith('全功能') }">
+            <div
+              v-if="plan.badge"
+              class="plan-badge"
+              :class="{
+                agent: plan.badge === '代理' || plan.badge === '全功能代理',
+                full: plan.badge?.startsWith('全功能'),
+              }"
+            >
               {{ plan.badge }}
             </div>
             <div class="plan-header">
@@ -442,7 +456,10 @@ main {
   font-weight: 500;
   border-radius: 7px;
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
   white-space: nowrap;
   position: relative;
 }

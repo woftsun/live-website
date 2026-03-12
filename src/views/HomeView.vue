@@ -30,7 +30,7 @@ const supportedPlatforms = ref([
     featureCount: 3,
     color: '#fe2c55',
     bgColor: '#fef2f2',
-    comingSoon: true,
+    comingSoon: false,
     icon: `<path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.07 2.52 5.7 5.7 5.7 3.15 0 5.7-2.55 5.7-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>`,
   },
 ])
@@ -309,8 +309,16 @@ const getTestimonialsByColumn = () => {
           </div>
         </div>
         <div class="hero-image">
-          <div class="product-image">
-            <img src="https://tools.woftsun.cn/band.png" alt="Live Assistant Demo" />
+          <div class="product-display">
+            <div class="product-image card-left">
+              <img src="https://tools.woftsun.cn/band1.png" alt="Live Assistant Demo 1" />
+            </div>
+            <div class="product-image card-center">
+              <img src="https://tools.woftsun.cn/band.png" alt="Live Assistant Demo 2" />
+            </div>
+            <div class="product-image card-right">
+              <img src="https://tools.woftsun.cn/band2.png" alt="Live Assistant Demo 3" />
+            </div>
           </div>
         </div>
       </div>
@@ -447,7 +455,7 @@ main {
 .hero {
   background: #ffffff;
   color: #1f2937;
-  padding: 6rem 0 8rem 0;
+  padding: 6rem 0 2rem 0;
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -502,7 +510,7 @@ main {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 4rem;
+  gap: 3rem;
   position: relative;
   z-index: 2;
 }
@@ -652,20 +660,71 @@ main {
   align-items: center;
   position: relative;
   width: 100%;
+  perspective: 1000px;
+}
+
+.product-display {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px; /* Space for the fanned cards at bottom */
 }
 
 .product-image {
-  width: 100%;
-  max-height: 750px;
+  width: 55%;
   height: auto;
   border-radius: 20px;
   box-shadow:
     0 25px 50px rgba(59, 130, 246, 0.15),
     0 0 30px rgba(59, 130, 246, 0.08);
   overflow: hidden;
-  transform: translateY(30px);
   opacity: 0.95;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #fff;
+  border: 4px solid #fff;
+}
+
+.card-center {
   position: relative;
+  z-index: 10;
+  transform: translateY(0);
+}
+
+.card-center:hover {
+  transform: translateY(-10px) scale(1.05);
+  z-index: 20;
+}
+
+.card-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 5;
+  transform: translateX(-50%) rotate(-10deg) translateY(20px) scale(0.9);
+}
+
+.card-left:hover {
+  transform: translateX(-60%) rotate(-15deg) translateY(10px) scale(0.95);
+  z-index: 15;
+}
+
+.card-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 5;
+  transform: translateX(50%) rotate(10deg) translateY(20px) scale(0.9);
+}
+
+.card-right:hover {
+  transform: translateX(60%) rotate(15deg) translateY(10px) scale(0.95);
+  z-index: 15;
 }
 
 .product-image::before {
@@ -677,7 +736,7 @@ main {
   bottom: 0;
   background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.05), transparent);
   pointer-events: none;
-  border-radius: 20px;
+  border-radius: 16px;
 }
 
 .product-image img {
@@ -1200,7 +1259,7 @@ main {
   }
 
   .product-image {
-    max-width: 700px;
+    width: 60%;
   }
 
   .platforms-grid {
@@ -1239,9 +1298,20 @@ main {
     align-items: center;
   }
 
+  .product-display {
+    transform: scale(0.9);
+  }
+
   .product-image {
-    max-width: 500px;
-    transform: translateY(20px);
+    width: 75%;
+  }
+
+  .card-left {
+    transform: translateX(-30%) rotate(-8deg) translateY(10px) scale(0.9);
+  }
+
+  .card-right {
+    transform: translateX(30%) rotate(8deg) translateY(10px) scale(0.9);
   }
 
   .platforms-section {
