@@ -17,7 +17,12 @@ onMounted(() => {
   pricingPlans.value = plans
 })
 
-const goToContact = () => {
+const goToContact = plan => {
+  if (plan?.buyNowEnabled && plan?.buyNowUrl) {
+    window.location.href = plan.buyNowUrl
+    return
+  }
+
   router.push(`/contact/${currentId.value}`)
 }
 </script>
@@ -64,7 +69,7 @@ const goToContact = () => {
                 {{ feature }}
               </li>
             </ul>
-            <button class="plan-button" @click="goToContact">
+            <button class="plan-button" @click="goToContact(plan)">
               {{ plan.buttonText }}
             </button>
           </div>
